@@ -2,28 +2,26 @@
 #define GRAPH_H_
 
 #include <vector> 
+#include <memory>
 
-using std::vector; 
+using edges_t = std::vector<std::vector<int>>; 
   
 // A class that represents an undirected graph 
 class Graph 
 { 
-    vector<vector<unsigned int>> graph;
-    unsigned int n_nodes, n_edges;
-    unsigned int used_colors;
-public: 
-    unsigned int getUsedColors(){
-        return this->used_colors;
+    std::shared_ptr<edges_t> edges;
+    int nodes;    
+public:  
+    Graph(int n = 0);    
+    int getNodes() const
+    {
+        return this->nodes;
     }
-    unsigned int getNodes(){
-        return this->n_nodes;
+    std::shared_ptr<edges_t> getEdges() const
+    {
+        return this->edges;
     }
-    unsigned int getEdges(){
-        return this->n_edges;
-    }
-    vector<vector<unsigned int>> getGraph(){
-        return this->graph;
-    }
+    void setEdges(const edges_t);
 }; 
 
 #endif
