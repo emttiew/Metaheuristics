@@ -9,19 +9,21 @@ using edges_t = std::vector<std::vector<int>>;
 // A class that represents an undirected graph 
 class Graph 
 { 
-    std::shared_ptr<edges_t> edges;
+    edges_t edges;
     int nodes;    
 public:  
-    Graph(int n = 0);    
+    Graph(int n = 0) : nodes(n) {};    
     int getNodes() const
     {
         return this->nodes;
     }
-    std::shared_ptr<edges_t> getEdges() const
+    edges_t getEdges() const
     {
         return this->edges;
     }
-    void setEdges(const edges_t);
-}; 
-
+    void setEdges(const edges_t e) 
+    {
+        edges = e;  
+    }
+};
 #endif

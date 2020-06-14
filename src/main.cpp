@@ -12,7 +12,7 @@ int main()
         {2, 3},
         {3, 4}
     };
-    Graph graph(5);
+    Graph graph(6);
     graph.setEdges(graph_edges);
 
     greedy_solution_t sol;
