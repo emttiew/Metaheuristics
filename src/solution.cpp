@@ -7,36 +7,17 @@ void outint(int n) {
 
 int goal(greedy_solution_t sol)
 {   
-    //auto N = problem->getNodes;
-   // auto edges = problem->getEdges;
+    auto N = sol.problem->getNodes();
+    auto edges = sol.problem->getEdges(); 
 
-    
-    edges_t edges1  = {
-        {0, 1},
-        {0, 2},
-        {1, 2},
-        {1, 3},
-        {2, 3},
-        {3, 4}
-    };
-
-    edges_t edges  = {
-        {1, 2},
-        {0, 2, 3},
-        {0, 1, 3},
-        {1, 2, 4},
-        {3}
-    };
-    const int N = 5;
-
-    int result[N];
+    std::vector<int> result(N);
     int n_colors = 0;
     result[0] = 0;
 
     for (int u = 1; u < N; u++)
         result[u] = -1;
     
-    bool available[N];
+    std::vector<bool> available(N);
     for (int cr = 0; cr < N; cr++) 
         available[cr] = false;
 
@@ -61,7 +42,6 @@ int goal(greedy_solution_t sol)
                 available[result[*i]] = false;
     }
     
-    n_colors = *std::max_element(result, result + N) + 1;
-
+    n_colors = *std::max_element(result.begin(), result.end()) + 1;
     return n_colors;    
 }

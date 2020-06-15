@@ -1,6 +1,7 @@
 #include "solution.h"
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 int main()
 {
@@ -13,6 +14,14 @@ int main()
         {3, 4}
     };
 
+    // edges_t edges  = {
+    //     {1, 2},
+    //     {0, 2, 3},
+    //     {0, 1, 3},
+    //     {1, 2, 4},
+    //     {3}
+    // };
+
     Graph graph(graph_edges);
     std::cout << graph.getNodes() << "\n";
     for(auto x : graph.getEdges()) 
@@ -21,9 +30,14 @@ int main()
         for (auto i : x)
             std::cout << i << "\t";
     }
-    // greedy_solution_t sol;
-    // sol.problem = std::make_shared<Graph>(graph);
-    
-    // std::cout << sol.goal() << std::endl;
+    std::cout << "\n";
+    greedy_solution_t sol;
+    sol.problem = std::make_shared<Graph>(graph);
+    std::cout << "color used: " << goal(sol) << std::endl;
+
+    // do {
+    //     sol.problem->setEdges(graph_edges);
+    //     std::cout << "color used: " << goal(sol) << std::endl;
+    // } while(std::next_permutation(graph_edges.begin(), graph_edges.end()));
     return 0;
 }
