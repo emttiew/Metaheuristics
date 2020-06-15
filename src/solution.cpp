@@ -5,7 +5,7 @@ void outint(int n) {
     std::cout << n << "\n";
 }
 
-int greedy_solution_t::goal() const
+int goal(greedy_solution_t sol)
 {   
     //auto N = problem->getNodes;
    // auto edges = problem->getEdges;

@@ -5,15 +5,12 @@
 #include <vector>
 #include <iostream>
 
-class solution_t {
+class greedy_solution_t {
 public:
-  virtual int goal() const = 0;
+  std::shared_ptr<Graph> problem;
+  std::vector<int> nodes_to_color;
 };
 
-class greedy_solution_t : public solution_t {  
-public:
-  std::shared_ptr<Graph> problem;  
-  int goal() const;
-};
+int goal(greedy_solution_t sol);
 
 #endif

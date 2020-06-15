@@ -9,8 +9,10 @@ using edges_t = std::vector<std::vector<int>>;
 // A class that represents an undirected graph 
 class Graph 
 { 
+private:
     edges_t edges;
-    int nodes;    
+    int nodes; 
+    edges_t edge_parser(edges_t graph);   
 public:  
     Graph(int n = 0) : nodes(n) {};    
     int getNodes() const
