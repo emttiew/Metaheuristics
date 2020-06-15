@@ -12,9 +12,9 @@ class Graph
 private:
     edges_t edges;
     int nodes; 
-    edges_t edge_parser(edges_t graph);   
+    edges_t edge_parser(const edges_t & graph);   
 public:  
-    Graph(int n = 0) : nodes(n) {};    
+    Graph(edges_t graph) : nodes(edge_parser(graph).size()), edges(edge_parser(graph)) {};    
     int getNodes() const
     {
         return this->nodes;
@@ -25,7 +25,7 @@ public:
     }
     void setEdges(const edges_t e) 
     {
-        edges = e;  
+        edges = edge_parser(e);  
     }
 };
 #endif
