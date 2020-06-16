@@ -23,9 +23,13 @@ public:
     {
         return this->edges;
     }
-    void setEdges(const edges_t e) 
+    void setAndParseEdges(const edges_t e) 
     {
         edges = edge_parser(e);  
+    }
+    void setEdges(const edges_t e)
+    {
+        edges = e;
     }
 };
 #endif

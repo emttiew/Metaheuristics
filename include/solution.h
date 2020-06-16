@@ -11,6 +11,9 @@ public:
   std::vector<int> nodes_to_color;
 };
 
-int goal(greedy_solution_t sol);
+int goal(greedy_solution_t & sol);
+
+greedy_solution_t next_solution(const greedy_solution_t & sol);
+edges_t graph_permutation(const greedy_solution_t & sol);
 
 #endif
