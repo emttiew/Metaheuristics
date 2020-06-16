@@ -59,8 +59,9 @@ int main()
             std::cout << i << "\t";
     }
     std::cout << "\n";
+    int k = 4;
     do {
-        edges2 = next_solution(sol).problem->getEdges();
+        edges2 = next_solution(sol).problem->getEdges();        
         for(auto x : edges2) 
         {
             std::cout << "\n";
@@ -68,7 +69,9 @@ int main()
                 std::cout << i << "\t";
         }
         std::cout << "\n";
-    } while (std::next_permutation(sol.nodes_to_color.begin(), sol.nodes_to_color.end()));
+        std::cout << "color used: " << goal(sol) << std::endl;
+        k--;
+    } while (k > 0);
 
     
 

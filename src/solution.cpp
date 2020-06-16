@@ -63,7 +63,7 @@ edges_t graph_permutation(const greedy_solution_t & sol)
        for(it = edges[i].begin(); it != edges[i].end(); it++) 
        {
         if (*it < N - 1)
-            *it = fabs(*it + *(sol.nodes_to_color.begin()));
+            *it = fabs(*it + 1);
         else 
             *it = 0;        
        }
