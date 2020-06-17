@@ -8,12 +8,12 @@
 class greedy_solution_t {
 public:
   std::shared_ptr<Graph> problem;
-  std::vector<int> nodes_to_color;
+  edges_t nodes_to_color;
 };
 
 int goal(greedy_solution_t & sol);
 
-greedy_solution_t next_solution(const greedy_solution_t & sol);
-edges_t graph_permutation(const greedy_solution_t & sol);
+greedy_solution_t & next_solution(greedy_solution_t & sol);
+void graph_permutation(greedy_solution_t & sol);
 
 #endif

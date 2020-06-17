@@ -9,12 +9,8 @@ void outint(int n) {
 int goal(greedy_solution_t & sol)
 {   
     auto N = sol.problem->getNodes();
-    auto edges = sol.problem->getEdges(); 
-   
-    for (int io = 0; io < edges.size() - 1; io++)
-    {
-        sol.nodes_to_color.push_back(io + 1);        
-    }
+    sol.problem->setAndParseEdges(sol.nodes_to_color);
+    auto edges = sol.problem->getEdges();     
 
     std::vector<int> result(N);
     int n_colors = 0;
@@ -52,29 +48,40 @@ int goal(greedy_solution_t & sol)
     return n_colors;    
 }
 
-edges_t graph_permutation(const greedy_solution_t & sol)
+void graph_permutation(greedy_solution_t & sol)
 {
-    auto N = sol.problem->getNodes();
-    auto edges = sol.problem->getEdges(); 
-
+    auto N = sol.nodes_to_color.size();
+    auto max = sol.problem->getNodes() - 1;
     std::vector<int>::iterator it;    
     for(int i = 0; i < N; i++)
     {
-       for(it = edges[i].begin(); it != edges[i].end(); it++) 
+       for(it = sol.nodes_to_color[i].begin(); it != sol.nodes_to_color[i].end(); it++) 
        {
-        if (*it < N - 1)
-            *it = fabs(*it + 1);
+        if (*it < max)
+            *it = *it + 1;
         else 
             *it = 0;        
        }
-    }       
-    return edges;
+    }
 }
 
-greedy_solution_t next_solution(const greedy_solution_t & sol)
+greedy_solution_t & next_solution(greedy_solution_t & sol)
 {
-    sol.problem->setEdges(graph_permutation(sol));
-    greedy_solution_t next = sol;
-    //std::next_permutation(sol.nodes_to_color.begin(), sol.nodes_to_color.end());
-    return next;
+    std::next_permutation(sol.nodes_to_color.begin(), sol.nodes_to_color.end());
+    graph_permutation(sol);
+    return sol;
+}
+
+bool operator==(const greedy_solution_t &a, const greedy_solution_t &b)
+{
+    if(a.problem != b.problem)
+        return false;
+    if(a.nodes_to_color.size() != b.nodes_to_color.size())
+        return false;
+    for(unsigned i = 0; i < a.nodes_to_color.size(); i++)
+    {
+        if(a.nodes_to_color[i] != b.nodes_to_color[i])
+            return false;
+    }
+    return true;
 }

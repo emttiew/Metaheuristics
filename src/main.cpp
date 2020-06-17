@@ -50,8 +50,10 @@ int main()
     std::cout << "\n";
     greedy_solution_t sol;
     sol.problem = std::make_shared<Graph>(graph);
+    sol.nodes_to_color = graph_edges;
     std::cout << "color used: " << goal(sol) << std::endl;
-    edges_t edges2 = next_solution(sol).problem->getEdges();
+    //edges_t edges2 = next_solution(sol).problem->getEdges();
+    edges_t edges2 = sol.problem->getEdges();
     for(auto x : edges2) 
     {
         std::cout << "\n";
@@ -60,8 +62,25 @@ int main()
     }
     std::cout << "\n";
     int k = 4;
+    // do {
+    //     //edges2 = next_solution(sol).problem->getEdges();   
+    //     //std::next_permutation(edges2.begin(), edges2.end());
+    //     //std::next_permutation(sol.nodes_to_color.begin(), sol.nodes_to_color.end());
+    //     for(auto x : sol.problem->getEdges()) 
+    //     {
+    //         std::cout << "\n";
+    //         for (auto i : x)
+    //             std::cout << i << "\t";
+    //     }
+    //     std::cout << "\n";
+    //     std::cout << "color used: " << goal(sol) << std::endl;
+    //     k--;
+    // } while (std::next_permutation(sol.nodes_to_color.begin(), sol.nodes_to_color.end()));
+
     do {
-        edges2 = next_solution(sol).problem->getEdges();        
+        edges2 = next_solution(sol).problem->getEdges();   
+        //std::next_permutation(edges2.begin(), edges2.end());
+        //std::next_permutation(sol.nodes_to_color.begin(), sol.nodes_to_color.end());
         for(auto x : edges2) 
         {
             std::cout << "\n";
