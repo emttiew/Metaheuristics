@@ -4,6 +4,7 @@
 #include "graph.h"
 #include <vector>
 #include <iostream>
+#include <memory>
 
 class greedy_solution_t {
 public:
@@ -15,5 +16,8 @@ int goal(greedy_solution_t & sol);
 
 greedy_solution_t & next_solution(greedy_solution_t & sol);
 void graph_permutation(greedy_solution_t & sol);
+std::ostream & operator<<(std::ostream &os, const greedy_solution_t &solution);
+bool operator==(const greedy_solution_t &a, const greedy_solution_t &b);
+// greedy_solution_t randomize_solution(greedy_solution_t initial_problem);
 
 #endif

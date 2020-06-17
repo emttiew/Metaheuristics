@@ -1,12 +1,13 @@
 #include "solution.h"
 #include <algorithm>
 #include <math.h>
+#include <random>
 
 void outint(int n) {
     std::cout << n << "\n";
 }
 
-int goal(greedy_solution_t & sol)
+int goal(greedy_solution_t &sol)
 {   
     auto N = sol.problem->getNodes();
     sol.problem->setAndParseEdges(sol.nodes_to_color);
@@ -32,13 +33,11 @@ int goal(greedy_solution_t & sol)
             }
 
         int cr;
-
         for (cr = 0; cr < N; cr++)
             if(available[cr] == false)                
                 break;       
         
         result[u] = cr;
-
         for (i = edges[u].begin(); i != edges[u].end(); ++i)
             if(result[*i] != -1)
                 available[result[*i]] = false;
@@ -48,7 +47,7 @@ int goal(greedy_solution_t & sol)
     return n_colors;    
 }
 
-void graph_permutation(greedy_solution_t & sol)
+void graph_permutation(greedy_solution_t &sol)
 {
     auto N = sol.nodes_to_color.size();
     auto max = sol.problem->getNodes() - 1;
@@ -65,7 +64,7 @@ void graph_permutation(greedy_solution_t & sol)
     }
 }
 
-greedy_solution_t & next_solution(greedy_solution_t & sol)
+greedy_solution_t & next_solution(greedy_solution_t &sol)
 {
     std::next_permutation(sol.nodes_to_color.begin(), sol.nodes_to_color.end());
     graph_permutation(sol);
@@ -85,3 +84,27 @@ bool operator==(const greedy_solution_t &a, const greedy_solution_t &b)
     }
     return true;
 }
+
+std::ostream & operator<<(std::ostream &os, const greedy_solution_t &solution) 
+{
+  for(auto x : solution.problem->getEdges()) 
+        {
+            os << "\n";
+            for (auto i : x)
+                os << i << "\t";
+        }
+  return os;
+}
+
+// greedy_solution_t randomize_solution(greedy_solution_t initial_problem) 
+// {
+//   static std::random_device rd;
+//   static std::mt19937 gen(rd());
+//   edges_t graph(initial_problem.nodes_to_color.size());
+//   std::iota(std::begin(graph), std::end(graph), 0);
+//   initial_problem.nodes_to_color.clear();
+//   std::random_shuffle(graph.begin(), graph.end(),
+//                       [](int i) { return gen() % i; });
+//   initial_problem.nodes_to_color = graph;
+//   return initial_problem;
+// };

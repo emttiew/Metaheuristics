@@ -1,7 +1,12 @@
 #include "solution.h"
+#include "solver_brute_force.h"
 #include <vector>
 #include <iostream>
+#include <set>
 #include <algorithm>
+#include <map>
+#include <chrono>
+#include <random>
 
 int main()
 {
@@ -39,64 +44,30 @@ int main()
     //     {1, 2, 3}
     // };
 
+    std::map<std::string, std::map<std::string, std::string>> results;
     Graph graph(graph_edges);
-    std::cout << graph.getNodes() << "\n";
-    for(auto x : graph.getEdges()) 
-    {
-        std::cout << "\n";
-        for (auto i : x)
-            std::cout << i << "\t";
-    }
-    std::cout << "\n";
-    greedy_solution_t sol;
-    sol.problem = std::make_shared<Graph>(graph);
-    sol.nodes_to_color = graph_edges;
-    std::cout << "color used: " << goal(sol) << std::endl;
-    //edges_t edges2 = next_solution(sol).problem->getEdges();
-    edges_t edges2 = sol.problem->getEdges();
-    for(auto x : edges2) 
-    {
-        std::cout << "\n";
-        for (auto i : x)
-            std::cout << i << "\t";
-    }
-    std::cout << "\n";
-    int k = 4;
-    // do {
-    //     //edges2 = next_solution(sol).problem->getEdges();   
-    //     //std::next_permutation(edges2.begin(), edges2.end());
-    //     //std::next_permutation(sol.nodes_to_color.begin(), sol.nodes_to_color.end());
-    //     for(auto x : sol.problem->getEdges()) 
-    //     {
-    //         std::cout << "\n";
-    //         for (auto i : x)
-    //             std::cout << i << "\t";
-    //     }
-    //     std::cout << "\n";
+    // greedy_solution_t sol;
+    greedy_solution_t problem;
+    problem.problem = std::make_shared<Graph>(graph);
+    problem.nodes_to_color = graph_edges;
+    // sol.problem = std::make_shared<Graph>(graph);
+    // sol.nodes_to_color = graph_edges;
+    // std::cout << sol << "\n";
+    // int k = 4;
+    // do {        
+    //     std::cout << next_solution(sol) << "\n";
     //     std::cout << "color used: " << goal(sol) << std::endl;
     //     k--;
-    // } while (std::next_permutation(sol.nodes_to_color.begin(), sol.nodes_to_color.end()));
+    // } while (k > 0);    
 
-    do {
-        edges2 = next_solution(sol).problem->getEdges();   
-        //std::next_permutation(edges2.begin(), edges2.end());
-        //std::next_permutation(sol.nodes_to_color.begin(), sol.nodes_to_color.end());
-        for(auto x : edges2) 
-        {
-            std::cout << "\n";
-            for (auto i : x)
-                std::cout << i << "\t";
-        }
-        std::cout << "\n";
-        std::cout << "color used: " << goal(sol) << std::endl;
-        k--;
-    } while (k > 0);
-
+    auto t_start = std::chrono::steady_clock::now();
+    auto sol =
+        brute_force([problem]() { return problem; }, next_solution, goal);
+    auto t_finish = std::chrono::steady_clock::now();
+    std::cout << "#brute_force GOAL: " << goal(sol)
+         << " dt: " << (t_finish - t_start).count() << "\n";
+    results["brute_force"] = {{"goal", std::to_string(goal(sol))}};
     
 
-    // do {
-    //     sol.problem->setEdges(graph_edges);
-    //     std::cout << "color used: " << goal(sol) << std::endl;
-    // } while(std::next_permutation(graph_edges.begin(), graph_edges.end()));
     return 0;
 }
