@@ -120,7 +120,6 @@ std::vector<greedy_solution_t> get_close_solutions(const greedy_solution_t sol0)
     ret.push_back(sol);
   }
 
-  // zamieniamy miejscami 2 ze sobą
   for (int i = 0; i < (int)sol.nodes_to_color.size(); i++) {
     std::swap(ret.at(i).nodes_to_color.at(i),
               ret.at(i).nodes_to_color.at((i + 1) % sol.nodes_to_color.size()));
