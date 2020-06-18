@@ -18,6 +18,8 @@ greedy_solution_t & next_solution(greedy_solution_t & sol);
 void graph_permutation(greedy_solution_t & sol);
 std::ostream & operator<<(std::ostream &os, const greedy_solution_t &solution);
 bool operator==(const greedy_solution_t &a, const greedy_solution_t &b);
-// greedy_solution_t randomize_solution(greedy_solution_t initial_problem);
+std::istream &operator>>(std::istream &os, greedy_solution_t &problem);
+std::vector<greedy_solution_t> get_close_solutions(const greedy_solution_t sol0);
+greedy_solution_t randomize_solution(greedy_solution_t &initial_problem);
 
 #endif

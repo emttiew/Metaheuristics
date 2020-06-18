@@ -1,7 +1,10 @@
 #include "solution.h"
+#include "json.hpp"
 #include <algorithm>
 #include <math.h>
 #include <random>
+
+using nlohmann::json;
 
 void outint(int n) {
     std::cout << n << "\n";
@@ -96,15 +99,45 @@ std::ostream & operator<<(std::ostream &os, const greedy_solution_t &solution)
   return os;
 }
 
-// greedy_solution_t randomize_solution(greedy_solution_t initial_problem) 
-// {
-//   static std::random_device rd;
-//   static std::mt19937 gen(rd());
-//   edges_t graph(initial_problem.nodes_to_color.size());
-//   std::iota(std::begin(graph), std::end(graph), 0);
-//   initial_problem.nodes_to_color.clear();
-//   std::random_shuffle(graph.begin(), graph.end(),
-//                       [](int i) { return gen() % i; });
-//   initial_problem.nodes_to_color = graph;
-//   return initial_problem;
-// };
+std::istream &operator>>(std::istream &os, greedy_solution_t &problem) {
+  json data;
+  int i = 0;
+  os >> data;
+  problem.nodes_to_color.clear();
+  for (auto e : data.at("problem")) {
+    problem.nodes_to_color.push_back(
+        {e.at("x"), e.at("y")});    
+  }
+  Graph graph(problem.nodes_to_color);
+  problem.problem = std::make_shared<Graph>(graph);
+  return os;
+}
+
+std::vector<greedy_solution_t> get_close_solutions(const greedy_solution_t sol0) {
+  auto sol = sol0;
+  std::vector<greedy_solution_t> ret;
+  for (unsigned i = 0; i < sol.nodes_to_color.size(); i++) {
+    ret.push_back(sol);
+  }
+
+  // zamieniamy miejscami 2 ze sobą
+  for (int i = 0; i < (int)sol.nodes_to_color.size(); i++) {
+    std::swap(ret.at(i).nodes_to_color.at(i),
+              ret.at(i).nodes_to_color.at((i + 1) % sol.nodes_to_color.size()));
+  }
+  return ret;
+}
+
+greedy_solution_t randomize_solution(greedy_solution_t &initial_problem) 
+{
+  static std::random_device rd;
+  static std::mt19937 gen(rd());
+  graph_permutation(initial_problem);
+  edges_t graph = initial_problem.nodes_to_color; 
+  initial_problem.nodes_to_color.clear(); 
+  std::random_shuffle(graph.begin(), graph.end(),
+                      [](int i) { return gen() % i; });
+  initial_problem.nodes_to_color = graph;
+  initial_problem.problem->setAndParseEdges(graph);
+  return initial_problem;
+};
