@@ -80,10 +80,14 @@ bool operator==(const greedy_solution_t &a, const greedy_solution_t &b)
         return false;
     if(a.nodes_to_color.size() != b.nodes_to_color.size())
         return false;
+    std::vector<int>::const_iterator it_a;
+    std::vector<int>::const_iterator it_b;
     for(unsigned i = 0; i < a.nodes_to_color.size(); i++)
     {
-        if(a.nodes_to_color[i] != b.nodes_to_color[i])
-            return false;
+        it_b = b.nodes_to_color[i].begin();
+        for (it_a = a.nodes_to_color[i].begin(); it_a != a.nodes_to_color[i].end(); ++it_a, ++it_b)
+            if(*it_a != *it_b)
+                return false;
     }
     return true;
 }
