@@ -1,4 +1,4 @@
-# Metaheurystyki
-Rozwiązania zadań z przedmiotu "Metaheurystyki" 
+# Metaheuristics
+Academic project on the specialization "artificial intelligence" 
 
-Problem przewodni: [Graph Coloring](https://en.wikipedia.org/wiki/Graph_coloring#Algorithms)
+Issue: [Graph Coloring](https://en.wikipedia.org/wiki/Graph_coloring#Algorithms)
